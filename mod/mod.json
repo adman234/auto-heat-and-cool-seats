@@ -1,0 +1,20 @@
+{
+  "id": "auto-heat-and-cool-seats",
+  "name": "Auto Heat and Cool Seats",
+  "version": "1.0",
+  "hmgapi": ">=1.0.0",
+  "authors": ["Kyle"],
+  "license": "AGPL-3.0",
+  "description": "When the car starts, checks the outside temperature. Below your cold limit it turns on the seat heaters and steering wheel heat you picked; above your hot limit it turns on the seat coolers you picked. A seat you've already set is left alone. HMG-API version of Cold-start Heat by eclipseempire.",
+  "live": true,
+  "services": [
+    { "name": "seats", "script": "seats.sh", "user": "system", "restart": true, "start": "android" }
+  ],
+  "vehicle": {
+    "read": [
+      "hv.ready", "moving", "outside_temp", "outside_temp_f", "wheel_heat",
+      "seat_state.driver", "seat_state.passenger", "seat_state.rear_left", "seat_state.rear_right"
+    ],
+    "commands": ["seat_heat", "seat_vent", "wheel_heat"]
+  }
+}

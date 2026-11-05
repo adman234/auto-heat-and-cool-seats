@@ -1,0 +1,108 @@
+{
+  "version": 1,
+  "settings": [
+    {
+      "key": "unit",
+      "type": "choice",
+      "default": "f",
+      "title": "Temperature limits are in",
+      "options": [
+        { "value": "f", "title": "Fahrenheit" },
+        { "value": "c", "title": "Celsius" }
+      ],
+      "description": "Changing this doesn't convert the two limits below, so update them too."
+    },
+    {
+      "key": "cold_below",
+      "type": "number",
+      "default": 50,
+      "title": "Cold limit: heat when it's below",
+      "description": "Whole degrees; can be negative. Changes count from the next start."
+    },
+    {
+      "key": "hot_above",
+      "type": "number",
+      "default": 85,
+      "title": "Hot limit: cool when it's above",
+      "description": "Whole degrees; can be negative. Changes count from the next start."
+    },
+    {
+      "key": "wheel",
+      "type": "toggle",
+      "default": true,
+      "title": "Steering wheel heat when it's cold"
+    },
+    {
+      "key": "heat_driver",
+      "type": "choice",
+      "default": "medium",
+      "title": "Driver seat heat when it's cold",
+      "options": [
+        { "value": "off", "title": "Don't turn on" },
+        { "value": "low", "title": "Low" },
+        { "value": "medium", "title": "Medium" },
+        { "value": "high", "title": "High" }
+      ]
+    },
+    {
+      "key": "heat_passenger",
+      "type": "choice",
+      "default": "off",
+      "title": "Passenger seat heat when it's cold",
+      "options": [
+        { "value": "off", "title": "Don't turn on" },
+        { "value": "low", "title": "Low" },
+        { "value": "medium", "title": "Medium" },
+        { "value": "high", "title": "High" }
+      ]
+    },
+    {
+      "key": "heat_rear_left",
+      "type": "choice",
+      "default": "off",
+      "title": "Rear left seat heat when it's cold",
+      "options": [
+        { "value": "off", "title": "Don't turn on" },
+        { "value": "low", "title": "Low" },
+        { "value": "high", "title": "High" }
+      ]
+    },
+    {
+      "key": "heat_rear_right",
+      "type": "choice",
+      "default": "off",
+      "title": "Rear right seat heat when it's cold",
+      "options": [
+        { "value": "off", "title": "Don't turn on" },
+        { "value": "low", "title": "Low" },
+        { "value": "high", "title": "High" }
+      ]
+    },
+    {
+      "key": "cool_driver",
+      "type": "choice",
+      "default": "medium",
+      "title": "Driver seat cooling when it's hot",
+      "options": [
+        { "value": "off", "title": "Don't turn on" },
+        { "value": "low", "title": "Low" },
+        { "value": "medium", "title": "Medium" },
+        { "value": "high", "title": "High" }
+      ],
+      "description": "Leave this off if the seat has no ventilation."
+    },
+    {
+      "key": "cool_passenger",
+      "type": "choice",
+      "default": "off",
+      "title": "Passenger seat cooling when it's hot",
+      "options": [
+        { "value": "off", "title": "Don't turn on" },
+        { "value": "low", "title": "Low" },
+        { "value": "medium", "title": "Medium" },
+        { "value": "high", "title": "High" }
+      ],
+      "description": "Leave this off if the seat has no ventilation."
+    }
+  ]
+}
