@@ -15,8 +15,8 @@ Tested on a 2023 Kia EV6 GT-Line (USA), firmware 260507, with HMG-API 1.0.0.
 ## Known issues
 
 **The head unit restarts shortly after the car starts, on a 2023 Kia Niro EV (USA, firmware
-260507, HMG-API 1.0.2).** The screen restarts about 25 seconds after the car comes on, once for
-each car start. It then stays up until the next start.
+260507, HMG-API 1.0.2).** The screen restarts within about 30 seconds of the car coming on, once
+for each car start. It then stays up until the next start.
 
 The bug is in HMG-API's vehicle service, which this mod needs in order to read the car. When the
 car sends Digital Key data at start, the service's reply to that callback is missing an array the
