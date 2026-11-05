@@ -55,8 +55,6 @@ Manager.
 | Heat level for rear left and rear right (off, low, high) | off |
 | Cooling level for driver and passenger (off, low, medium, high) | driver medium, passenger off |
 
-A temperature exactly on a limit counts, so the mod acts. Changes count from the next start.
-
 The first time the mod sends a command, HMG-API asks on screen whether to allow it. There's
 one question each for seat heat, seat cooling and wheel heat. The mod keeps trying for a
 minute while a question is up, so the first start can look slow. After that, the question
