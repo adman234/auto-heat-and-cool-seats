@@ -5,8 +5,9 @@
     ./build.py <key> <hmg-api checkout>
                               writes dist/<id>-v<major.minor>.hmgapi.zip and, for a flash drive,
                               dist/<id>-v<major.minor>-hmgapi-usb.zip (HMGAPI/updates/<id>-v<major.minor>.zip inside)
-                              and dist/<id>-v<major.minor>-nemesis-usb.zip (made by the checkout's
-                              tools/mknemesismod.sh, needs unzip and zip)
+                              and dist/<id>-v<major.minor>-nemesis-usb.zip, and for the NEMESIS Package
+                              Store dist/<id>-v<major.minor>-nemesis-package.zip (both made by the
+                              checkout's tools/mknemesismod.sh, needs unzip and zip)
 
 Same files and manifest as `hmgapi.engine.Signing sign`: SHA256withECDSA over
 META-HMGAPI/manifest.json, the uuid derived from the public key, so keys made by
@@ -65,13 +66,15 @@ def files_of(root):
 
 
 def nemesis_usb(signed, mod, major_minor, hmgapi):
-    """HMG-API's own tool wraps the signed zip; it names the result <id>-<version>-nemesis.zip."""
+    """HMG-API's own tool wraps the signed zip; it names the results <id>-<version>-nemesis[-package].zip."""
     tool = os.path.join(os.path.abspath(hmgapi), "tools", "mknemesismod.sh")
     with tempfile.TemporaryDirectory() as t:
         subprocess.run(["sh", tool, os.path.abspath(signed), t], check=True, capture_output=True)
         out = os.path.join(DIST, f"{mod['id']}-v{major_minor}-nemesis-usb.zip")
+        store = os.path.join(DIST, f"{mod['id']}-v{major_minor}-nemesis-package.zip")
         shutil.move(os.path.join(t, f"{mod['id']}-{mod['version']}-nemesis.zip"), out)
-    return out
+        shutil.move(os.path.join(t, f"{mod['id']}-{mod['version']}-nemesis-package.zip"), store)
+    return out, store
 
 
 def build(key, hmgapi):
@@ -116,7 +119,7 @@ def build(key, hmgapi):
     print(f"signed {mod['id']} {mod['version']}: {len(files)} files, uuid {uuid_of(pub)}")
     print(out)
     print(usb)
-    print(nemesis_usb(out, mod, major_minor, hmgapi))
+    print(*nemesis_usb(out, mod, major_minor, hmgapi), sep="\n")
 
 
 if __name__ == "__main__":

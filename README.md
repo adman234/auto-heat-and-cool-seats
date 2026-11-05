@@ -95,8 +95,9 @@ You need a checkout of [HMG-API](https://github.com/VysseCodes/HMG-API), whose
 ```
 
 This writes the two release files to `dist/`, along with
-`auto-heat-and-cool-seats-v1.0.hmgapi.zip`, the signed mod inside them. Updates must be signed
-with the same key as the first install.
+`auto-heat-and-cool-seats-v1.0.hmgapi.zip`, the signed mod inside them, and
+`auto-heat-and-cool-seats-v1.0-nemesis-package.zip`, the file to upload to the NEMESIS Package
+Store. Updates must be signed with the same key as the first install.
 
 ## Test
 
