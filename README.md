@@ -12,6 +12,20 @@ by eclipseempire, with seat cooling and rear seats added.
 
 Tested on a 2023 Kia EV6 GT-Line (USA), firmware 260507, with HMG-API 1.0.0.
 
+## Known issues
+
+**The head unit restarts shortly after the car starts, on a 2023 Kia Niro EV (USA, firmware
+260507, HMG-API 1.0.2).** The screen restarts about 25 seconds after the car comes on, once for
+each car start. It then stays up until the next start.
+
+The bug is in HMG-API's vehicle service, which this mod needs in order to read the car. When the
+car sends Digital Key data at start, the service's reply to that callback is missing an array the
+car's body control service expects, and that crashes the Android system. Other cars with Digital
+Key may be affected. The mod's own seat and wheel commands aren't the cause.
+
+There's no workaround in the mod yet. If this happens on your car, remove the mod to stop it.
+A fix needs to go into HMG-API.
+
 ## Install
 
 You need HMG-API 1.0.0 or later on the car first. Both methods use a USB flash drive. Download
