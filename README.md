@@ -23,9 +23,9 @@ ADB over USB has to be off, or the port can't read the drive.
 
 ### With the HMG-API app
 
-1. Download `auto-heat-and-cool-seats-v1.0-hmgapi-usb.zip`.
+1. Download `auto-heat-and-cool-seats-v1.0.0-hmgapi-usb.zip`.
 2. Unzip it onto the top level of a FAT32 flash drive, so the drive has
-   `HMGAPI/updates/auto-heat-and-cool-seats-v1.0.zip`.
+   `HMGAPI/updates/auto-heat-and-cool-seats-v1.0.0.zip`.
 3. Plug the drive into the car and install the mod from the updates page in the HMG-API app.
 4. Tap **Apply changes** in the app.
 
@@ -33,7 +33,7 @@ To remove the mod, use the HMG-API app.
 
 ### With NEMESIS
 
-1. Download `auto-heat-and-cool-seats-v1.0-nemesis-usb.zip`.
+1. Download `auto-heat-and-cool-seats-v1.0.0-nemesis-usb.zip`.
 2. Unzip it onto the top level of a FAT32 or exFAT flash drive, so the drive has `NEMESIS.data`
    and the `packages` folder at its top level. Keep only one NEMESIS package on the drive.
 3. Once Android is up, plug the drive into the car and confirm the install of
@@ -95,8 +95,8 @@ You need a checkout of [HMG-API](https://github.com/VysseCodes/HMG-API), whose
 ```
 
 This writes the two release files to `dist/`, along with
-`auto-heat-and-cool-seats-v1.0.hmgapi.zip`, the signed mod inside them, and
-`auto-heat-and-cool-seats-v1.0-nemesis-package.zip`, the file to upload to the NEMESIS Package
+`auto-heat-and-cool-seats-v1.0.0.hmgapi.zip`, the signed mod inside them, and
+`auto-heat-and-cool-seats-v1.0.0-nemesis-package.zip`, the file to upload to the NEMESIS Package
 Store. Updates must be signed with the same key as the first install.
 
 ## Test

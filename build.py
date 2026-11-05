@@ -3,10 +3,10 @@
 
     ./build.py keygen <key>   new author key: <key> (base64 PKCS#8) and <key>.pub (base64 X.509)
     ./build.py <key> <hmg-api checkout>
-                              writes dist/<id>-v<major.minor>.hmgapi.zip and, for a flash drive,
-                              dist/<id>-v<major.minor>-hmgapi-usb.zip (HMGAPI/updates/<id>-v<major.minor>.zip inside)
-                              and dist/<id>-v<major.minor>-nemesis-usb.zip, and for the NEMESIS Package
-                              Store dist/<id>-v<major.minor>-nemesis-package.zip (both made by the
+                              writes dist/<id>-v<version>.hmgapi.zip and, for a flash drive,
+                              dist/<id>-v<version>-hmgapi-usb.zip (HMGAPI/updates/<id>-v<version>.zip inside)
+                              and dist/<id>-v<version>-nemesis-usb.zip, and for the NEMESIS Package
+                              Store dist/<id>-v<version>-nemesis-package.zip (both made by the
                               checkout's tools/mknemesismod.sh, needs unzip and zip)
 
 Same files and manifest as `hmgapi.engine.Signing sign`: SHA256withECDSA over
@@ -89,13 +89,13 @@ def tested_on(descriptor):
     return descriptor
 
 
-def nemesis_usb(signed, mod, major_minor, hmgapi):
+def nemesis_usb(signed, mod, hmgapi):
     """HMG-API's own tool wraps the signed zip; it names the results <id>-<version>-nemesis[-package].zip."""
     tool = os.path.join(os.path.abspath(hmgapi), "tools", "mknemesismod.sh")
     with tempfile.TemporaryDirectory() as t:
         subprocess.run(["sh", tool, os.path.abspath(signed), t], check=True, capture_output=True)
-        out = os.path.join(DIST, f"{mod['id']}-v{major_minor}-nemesis-usb.zip")
-        store = os.path.join(DIST, f"{mod['id']}-v{major_minor}-nemesis-package.zip")
+        out = os.path.join(DIST, f"{mod['id']}-v{mod['version']}-nemesis-usb.zip")
+        store = os.path.join(DIST, f"{mod['id']}-v{mod['version']}-nemesis-package.zip")
         shutil.move(os.path.join(t, f"{mod['id']}-{mod['version']}-nemesis.zip"), out)
         shutil.move(os.path.join(t, f"{mod['id']}-{mod['version']}-nemesis-package.zip"), store)
     swap_in_zip(store, "NEMESIS.data", tested_on)
@@ -129,9 +129,8 @@ def build(key, hmgapi):
         open(sigf, "wb").write(sig)
         openssl("dgst", "-sha256", "-verify", ppem, "-signature", sigf, data=manifest)
 
-    major_minor = ".".join(mod["version"].split(".")[:2])
     os.makedirs(DIST, exist_ok=True)
-    out = os.path.join(DIST, f"{mod['id']}-v{major_minor}.hmgapi.zip")
+    out = os.path.join(DIST, f"{mod['id']}-v{mod['version']}.hmgapi.zip")
     with zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED) as z:
         z.writestr(f"{META}/manifest.json", manifest)
         z.writestr(f"{META}/signature", base64.b64encode(sig).decode() + "\n")
@@ -140,13 +139,13 @@ def build(key, hmgapi):
             if n.endswith(".sh"):
                 info.external_attr = 0o755 << 16
             z.writestr(info, open(os.path.join(MOD, n), "rb").read(), zipfile.ZIP_DEFLATED)
-    usb = os.path.join(DIST, f"{mod['id']}-v{major_minor}-hmgapi-usb.zip")
+    usb = os.path.join(DIST, f"{mod['id']}-v{mod['version']}-hmgapi-usb.zip")
     with zipfile.ZipFile(usb, "w", zipfile.ZIP_STORED) as z:
-        z.write(out, f"HMGAPI/updates/{mod['id']}-v{major_minor}.zip")
+        z.write(out, f"HMGAPI/updates/{mod['id']}-v{mod['version']}.zip")
     print(f"signed {mod['id']} {mod['version']}: {len(files)} files, uuid {uuid_of(pub)}")
     print(out)
     print(usb)
-    print(*nemesis_usb(out, mod, major_minor, hmgapi), sep="\n")
+    print(*nemesis_usb(out, mod, hmgapi), sep="\n")
 
 
 if __name__ == "__main__":
