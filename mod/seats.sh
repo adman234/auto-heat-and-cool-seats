@@ -80,13 +80,13 @@ deg() {       # deg <tenths>: for the log
 
 jobs_for() {  # jobs_for <temp in tenths>: what this temperature asks for, or nothing
     local s l j=
-    if [ $1 -lt $(limit cold_below 50) ]; then
+    if [ $1 -le $(limit cold_below 50) ]; then
         [ "$(setting wheel true)" = true ] && j=wheel_heat
         for s in driver passenger rear_left rear_right; do
             case $s in driver) l=$(setting heat_$s medium) ;; *) l=$(setting heat_$s off) ;; esac
             [ "$l" = off ] || j="$j seat_heat:$s:$l"
         done
-    elif [ $1 -gt $(limit hot_above 85) ]; then
+    elif [ $1 -ge $(limit hot_above 85) ]; then
         for s in driver passenger; do
             case $s in driver) l=$(setting cool_$s medium) ;; *) l=$(setting cool_$s off) ;; esac
             [ "$l" = off ] || j="$j seat_vent:$s:$l"

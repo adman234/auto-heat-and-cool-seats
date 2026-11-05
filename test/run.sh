@@ -72,7 +72,11 @@ scenario "not READY yet, then READY" '{}' $'0\n0\n1\n1\n1\n1\n1' "$COLD"
 scenario "accessory power only: nothing" '{}' $'0\n0\n0' ""
 scenario "hot: seat coolers, no wheel" '{}' "$ON" "seat_vent driver medium" 'echo 90 > $T/r/outside_temp_f'
 scenario "between the limits: nothing" '{}' "$ON" "" 'echo 62 > $T/r/outside_temp_f'
-scenario "exactly on a limit: nothing" '{}' "$ON" "" 'echo 50 > $T/r/outside_temp_f'
+scenario "exactly on the cold limit: heat" '{}' "$ON" "$COLD" 'echo 50 > $T/r/outside_temp_f'
+scenario "exactly on the hot limit: cool" '{}' "$ON" "seat_vent driver medium" 'echo 85 > $T/r/outside_temp_f'
+scenario "just over the cold limit: nothing" '{}' "$ON" "" 'echo 50.1 > $T/r/outside_temp_f'
+scenario "just under the hot limit: nothing" '{}' "$ON" "" 'echo 84.9 > $T/r/outside_temp_f'
+scenario "exactly on a negative limit: heat" '{"cold_below":-10,"wheel":false}' "$ON" "seat_heat driver medium" 'echo -10 > $T/r/outside_temp_f'
 scenario "just under a limit (decimal)" '{"wheel":false}' "$ON" "seat_heat driver medium" 'echo 49.9 > $T/r/outside_temp_f'
 scenario "service restart mid-drive: nothing" '{}' "$ON" "" 'echo 1 > $T/r/moving' 'echo "500.00 0" > $UP'
 scenario "just booted, already moving: still on" '{}' "$ON" "$COLD" 'echo 1 > $T/r/moving'

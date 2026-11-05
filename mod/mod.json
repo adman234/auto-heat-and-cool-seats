@@ -5,7 +5,7 @@
   "hmgapi": ">=1.0.0",
   "authors": ["Kyle"],
   "license": "AGPL-3.0",
-  "description": "When the car starts, checks the outside temperature. Below your cold limit it turns on the seat heaters and steering wheel heat you picked; above your hot limit it turns on the seat coolers you picked. A seat you've already set is left alone. HMG-API version of Cold-start Heat by eclipseempire.",
+  "description": "When the car starts, checks the outside temperature. At or below your cold limit it turns on the seat heaters and steering wheel heat you picked; at or above your hot limit it turns on the seat coolers you picked. A seat you've already set is left alone. HMG-API version of Cold-start Heat by eclipseempire.",
   "live": true,
   "services": [
     { "name": "seats", "script": "seats.sh", "user": "system", "restart": true, "start": "android" }

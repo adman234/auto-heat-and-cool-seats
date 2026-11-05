@@ -16,14 +16,14 @@
       "key": "cold_below",
       "type": "number",
       "default": 50,
-      "title": "Cold limit: heat when it's below",
+      "title": "Cold limit: heat at or below",
       "description": "Whole degrees; can be negative. Changes count from the next start."
     },
     {
       "key": "hot_above",
       "type": "number",
       "default": 85,
-      "title": "Hot limit: cool when it's above",
+      "title": "Hot limit: cool at or above",
       "description": "Whole degrees; can be negative. Changes count from the next start."
     },
     {

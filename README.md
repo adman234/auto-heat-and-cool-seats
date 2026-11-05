@@ -2,8 +2,8 @@
 
 When the car starts, this checks the outside temperature and turns on what you picked:
 
-- **Below the cold limit:** seat heaters and steering wheel heat.
-- **Above the hot limit:** seat coolers.
+- **At or below the cold limit:** seat heaters and steering wheel heat.
+- **At or above the hot limit:** seat coolers.
 
 It's the HMG-API version of [Cold-start Heat](https://github.com/eclipseempire/hkmc-coldstart-heat)
 by eclipseempire, with seat cooling and rear seats added.
@@ -55,7 +55,7 @@ Manager.
 | Heat level for rear left and rear right (off, low, high) | off |
 | Cooling level for driver and passenger (off, low, medium, high) | driver medium, passenger off |
 
-A temperature exactly on a limit does nothing. Changes count from the next start.
+A temperature exactly on a limit counts, so the mod acts. Changes count from the next start.
 
 The first time the mod sends a command, HMG-API asks on screen whether to allow it. There's
 one question each for seat heat, seat cooling and wheel heat. The mod keeps trying for a
