@@ -19,6 +19,11 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 MOD = os.path.join(HERE, "mod")
 DIST = os.path.join(HERE, "dist")
 META = "META-HMGAPI"
+# what NEMESIS's store shows as compatible: only what the mod was tested on. A glob of
+# ro.build.product, and the unit's /system/onebin folder name. mod.json has no "system",
+# so HMG-API itself doesn't refuse other cars.
+TESTED_OS = "CVEV.USA.*.260507"
+TESTED_MODELS = "cvev_us"
 
 
 def openssl(*args, data=None):
@@ -65,6 +70,25 @@ def files_of(root):
     return sorted(out)
 
 
+def swap_in_zip(path, name, change):
+    """Rewrite one member of a zip, keeping the others and every member's attributes."""
+    with zipfile.ZipFile(path) as z:
+        items = [(i, z.read(i)) for i in z.infolist()]
+    with zipfile.ZipFile(path, "w") as z:
+        for i, d in items:
+            z.writestr(i, change(d) if i.filename == name else d)
+
+
+def tested_on(descriptor):
+    """The tool writes os and models as "any"; a mod with a "system" would need this changed."""
+    for k, v in (("os", TESTED_OS), ("models", TESTED_MODELS)):
+        any_ = f'{k}="any"'.encode()
+        if descriptor.count(any_) != 1:
+            sys.exit(f"NEMESIS.data has no {k}=\"any\" to replace")
+        descriptor = descriptor.replace(any_, f'{k}="{v}"'.encode())
+    return descriptor
+
+
 def nemesis_usb(signed, mod, major_minor, hmgapi):
     """HMG-API's own tool wraps the signed zip; it names the results <id>-<version>-nemesis[-package].zip."""
     tool = os.path.join(os.path.abspath(hmgapi), "tools", "mknemesismod.sh")
@@ -74,6 +98,9 @@ def nemesis_usb(signed, mod, major_minor, hmgapi):
         store = os.path.join(DIST, f"{mod['id']}-v{major_minor}-nemesis-package.zip")
         shutil.move(os.path.join(t, f"{mod['id']}-{mod['version']}-nemesis.zip"), out)
         shutil.move(os.path.join(t, f"{mod['id']}-{mod['version']}-nemesis-package.zip"), store)
+    swap_in_zip(store, "NEMESIS.data", tested_on)
+    packed = open(store, "rb").read()
+    swap_in_zip(out, f"packages/hmgapi.{mod['id']}.zip", lambda _: packed)
     return out, store
 
 
