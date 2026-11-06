@@ -10,7 +10,10 @@ by eclipseempire, with seat cooling and rear seats added.
 
 **[Download the latest release](https://github.com/dibble9012/auto-heat-and-cool-seats/releases/latest)**
 
-Tested on a 2023 Kia EV6 GT-Line (USA), firmware 260507, with HMG-API 1.0.0.
+Tested on:
+
+- 2023 Kia EV6 GT-Line (USA), firmware 260507, with HMG-API 1.0.0
+- 2023 Kia Niro Wave EV (USA), firmware 260507, with HMG-API 1.0.2 (see [Known issues](#known-issues))
 
 ## Known issues
 
@@ -24,7 +27,8 @@ car's body control service expects, and that crashes the Android system. Other c
 Key may be affected. The mod's own seat and wheel commands aren't the cause.
 
 There's no workaround in the mod yet. If this happens on your car, remove the mod to stop it.
-A fix needs to go into HMG-API.
+A fix for HMG-API is in [pull request #101](https://github.com/VysseCodes/HMG-API/pull/101), which
+hasn't been merged yet.
 
 ## Install
 
