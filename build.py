@@ -22,8 +22,9 @@ META = "META-HMGAPI"
 # what NEMESIS's store shows as compatible: only what the mod was tested on. A glob of
 # ro.build.product, and the unit's /system/onebin folder name. mod.json has no "system",
 # so HMG-API itself doesn't refuse other cars.
-TESTED_OS = "CVEV.USA.*.260507"
-TESTED_MODELS = "cvev_us"
+# This fork leaves them "any", so NEMESIS doesn't warn on other firmware; set them to tag again.
+TESTED_OS = None   # e.g. "CVEV.USA.*.260507"
+TESTED_MODELS = None   # e.g. "cvev_us"
 
 
 def openssl(*args, data=None):
@@ -98,7 +99,8 @@ def nemesis_usb(signed, mod, hmgapi):
         store = os.path.join(DIST, f"{mod['id']}-v{mod['version']}-nemesis-package.zip")
         shutil.move(os.path.join(t, f"{mod['id']}-{mod['version']}-nemesis.zip"), out)
         shutil.move(os.path.join(t, f"{mod['id']}-{mod['version']}-nemesis-package.zip"), store)
-    swap_in_zip(store, "NEMESIS.data", tested_on)
+    if TESTED_OS:
+        swap_in_zip(store, "NEMESIS.data", tested_on)
     packed = open(store, "rb").read()
     swap_in_zip(out, f"packages/hmgapi.{mod['id']}.zip", lambda _: packed)
     return out, store

@@ -87,6 +87,10 @@ scenario "chosen seats and levels" '{"wheel":false,"heat_driver":"off","heat_pas
     $'seat_heat passenger high\nseat_heat rear_left low\nseat_heat rear_right high'
 scenario "wheel only" '{"heat_driver":"off"}' "$ON" "wheel_heat on"
 scenario "chosen coolers" '{"cool_driver":"high","cool_passenger":"low"}' "$ON" $'seat_vent driver high\nseat_vent passenger low' 'echo 90 > $T/r/outside_temp_f'
+scenario "wheel limit 135: wheel on a mild day" '{"wheel_below":135}' "$ON" "wheel_heat on" 'echo 70 > $T/r/outside_temp_f'
+scenario "wheel limit 135: wheel and cooling when hot" '{"wheel_below":135}' "$ON" $'wheel_heat on\nseat_vent driver medium' 'echo 90 > $T/r/outside_temp_f'
+scenario "wheel limit 135, wheel off: nothing on a mild day" '{"wheel_below":135,"wheel":false}' "$ON" "" 'echo 70 > $T/r/outside_temp_f'
+scenario "wheel limit under the cold limit: seats only" '{"wheel_below":20}' "$ON" "seat_heat driver medium"
 scenario "Celsius limits, spaced JSON" '{"unit": "c", "cold_below": 5, "hot_above": 30, "wheel": false}' "$ON" "seat_heat driver medium" 'echo -3.5 > $T/r/outside_temp'
 scenario "negative limit" '{"cold_below":-10,"wheel":false}' "$ON" "" 'echo -3 > $T/r/outside_temp_f'
 scenario "under a negative limit" '{"cold_below":-10,"wheel":false}' "$ON" "seat_heat driver medium" 'echo -10.5 > $T/r/outside_temp_f'

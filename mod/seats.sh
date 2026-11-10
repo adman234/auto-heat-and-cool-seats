@@ -51,6 +51,10 @@ limit() {     # limit <key> <default>: a whole-degree setting, in tenths
     tenths "$(setting $1 $2)" || tenths $2
 }
 
+wheel_limit() {  # the wheel limit in tenths: its own setting, or the cold limit
+    tenths "$(setting wheel_below -)" || limit cold_below 50
+}
+
 tenths() {    # tenths <reading>: 73 -> 730, -3.5 -> -35; fails on anything else
     local v=$1 s=1 w f
     case "$v" in -*) s=-1; v=${v#-} ;; esac
@@ -80,8 +84,9 @@ deg() {       # deg <tenths>: for the log
 
 jobs_for() {  # jobs_for <temp in tenths>: what this temperature asks for, or nothing
     local s l j=
+    # the wheel has its own limit (the cold limit when it's empty), whether it's cold or hot
+    [ "$(setting wheel true)" = true ] && [ $1 -le $(wheel_limit) ] && j=wheel_heat
     if [ $1 -le $(limit cold_below 50) ]; then
-        [ "$(setting wheel true)" = true ] && j=wheel_heat
         for s in driver passenger rear_left rear_right; do
             case $s in driver) l=$(setting heat_$s medium) ;; *) l=$(setting heat_$s off) ;; esac
             [ "$l" = off ] || j="$j seat_heat:$s:$l"
@@ -156,7 +161,7 @@ on_start() {  # SNAP holds START's readings
         snapshot $START
     done
     jobs=$(jobs_for $t)
-    log "outside $(deg $t), limits $(deg $(limit cold_below 50)) and $(deg $(limit hot_above 85)): ${jobs:-no action}"
+    log "outside $(deg $t), limits $(deg $(limit cold_below 50)) and $(deg $(limit hot_above 85)), wheel $(deg $(wheel_limit)): ${jobs:-no action}"
     apply "$jobs"
 }
 
@@ -168,7 +173,7 @@ if [ "$1" = check ]; then
     snapshot $START
     if [ -n "$2" ]; then t=$(tenths "$2"); else t=$(outside); fi || { echo "no outside temperature"; exit 1; }
     echo "hv.ready $(seen hv.ready), moving $(seen moving), outside $(deg $t)"
-    echo "limits $(deg $(limit cold_below 50)) and $(deg $(limit hot_above 85))"
+    echo "limits $(deg $(limit cold_below 50)) and $(deg $(limit hot_above 85)), wheel $(deg $(wheel_limit))"
     echo "would send: $(jobs_for $t)"
     exit 0
 fi

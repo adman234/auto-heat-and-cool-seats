@@ -1,7 +1,7 @@
 {
   "id": "auto-heat-and-cool-seats",
   "name": "Auto Heat and Cool Seats",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "hmgapi": ">=1.0.0",
   "authors": ["Kyle"],
   "license": "AGPL-3.0",

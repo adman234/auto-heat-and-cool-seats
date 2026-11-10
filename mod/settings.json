@@ -33,6 +33,12 @@
       "title": "Steering wheel heat when it's cold"
     },
     {
+      "key": "wheel_below",
+      "type": "number",
+      "title": "Wheel limit: wheel heat at or below",
+      "description": "Whole degrees. Leave empty to use the cold limit. Seat heat still follows the cold limit, and seat cooling still works above the hot limit. 140 F or 60 C or more means every start."
+    },
+    {
       "key": "heat_driver",
       "type": "choice",
       "default": "medium",

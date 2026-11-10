@@ -8,7 +8,12 @@ When the car starts, this checks the outside temperature and turns on what you p
 It's the HMG-API version of [Cold-start Heat](https://github.com/eclipseempire/hkmc-coldstart-heat)
 by eclipseempire, with seat cooling and rear seats added.
 
-**[Download the latest release](https://github.com/dibble9012/auto-heat-and-cool-seats/releases/latest)**
+This is a fork of [dibble9012/auto-heat-and-cool-seats](https://github.com/dibble9012/auto-heat-and-cool-seats)
+that adds a separate **wheel limit**, so the steering wheel heat can turn on at a different
+temperature from the seats (set it to 140 °F to have the wheel heat on every start). Releases from
+this fork are signed with a different author key, so remove the original mod before installing one.
+
+**[Download the latest release](https://github.com/adman234/auto-heat-and-cool-seats/releases/latest)**
 
 Tested on:
 
@@ -34,16 +39,16 @@ hasn't been merged yet.
 
 You need HMG-API 1.0.0 or later on the car first. Both methods use a USB flash drive. Download
 the file for your method from the
-[latest release](https://github.com/dibble9012/auto-heat-and-cool-seats/releases/latest), listed
+[latest release](https://github.com/adman234/auto-heat-and-cool-seats/releases/latest), listed
 under **Assets**.
 
 ADB over USB has to be off, or the port can't read the drive.
 
 ### With the HMG-API app
 
-1. Download `auto-heat-and-cool-seats-v1.0.0-hmgapi-usb.zip`.
+1. Download `auto-heat-and-cool-seats-v1.1.0-hmgapi-usb.zip`.
 2. Unzip it onto the top level of a FAT32 flash drive, so the drive has
-   `HMGAPI/updates/auto-heat-and-cool-seats-v1.0.0.zip`.
+   `HMGAPI/updates/auto-heat-and-cool-seats-v1.1.0.zip`.
 3. Plug the drive into the car and install the mod from the updates page in the HMG-API app.
 4. Tap **Apply changes** in the app.
 
@@ -51,7 +56,7 @@ To remove the mod, use the HMG-API app.
 
 ### With NEMESIS
 
-1. Download `auto-heat-and-cool-seats-v1.0.0-nemesis-usb.zip`.
+1. Download `auto-heat-and-cool-seats-v1.1.0-nemesis-usb.zip`.
 2. Unzip it onto the top level of a FAT32 or exFAT flash drive, so the drive has `NEMESIS.data`
    and the `packages` folder at its top level. Keep only one NEMESIS package on the drive.
 3. Once Android is up, plug the drive into the car and confirm the install of
@@ -69,6 +74,7 @@ Manager.
 | Cold limit | 50 |
 | Hot limit | 85 |
 | Steering wheel heat when it's cold | on |
+| Wheel limit: wheel heat at or below (its own limit, hot or cold; set 140 °F to have it every start) | empty: the cold limit |
 | Heat level for driver and passenger (off, low, medium, high) | driver medium, passenger off |
 | Heat level for rear left and rear right (off, low, high) | off |
 | Cooling level for driver and passenger (off, low, medium, high) | driver medium, passenger off |
@@ -113,8 +119,8 @@ You need a checkout of [HMG-API](https://github.com/VysseCodes/HMG-API), whose
 ```
 
 This writes the two release files to `dist/`, along with
-`auto-heat-and-cool-seats-v1.0.0.hmgapi.zip`, the signed mod inside them, and
-`auto-heat-and-cool-seats-v1.0.0-nemesis-package.zip`, the file to upload to the NEMESIS Package
+`auto-heat-and-cool-seats-v1.1.0.hmgapi.zip`, the signed mod inside them, and
+`auto-heat-and-cool-seats-v1.1.0-nemesis-package.zip`, the file to upload to the NEMESIS Package
 Store. Updates must be signed with the same key as the first install.
 
 ## Test
